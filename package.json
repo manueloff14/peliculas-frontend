@@ -1,0 +1,29 @@
+{
+  "name": "peliculas-front-end",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@floating-ui/react-dom": "^2.1.2",
+    "@floating-ui/react-dom-interactions": "^0.13.3",
+    "@tippyjs/react": "^4.2.6",
+    "adblock-detector": "^2.1.0",
+    "blockadblock": "^3.2.1",
+    "detect-it": "^4.0.1",
+    "just-detect-adblock": "^1.1.0",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tippy.js": "^6.3.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4"
+  }
+}
