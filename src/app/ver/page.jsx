@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import AdBlockDetector from "@/components/AdBlockDetector";
 import Header from "@/components/Header";
 import { useSearchParams } from "next/navigation";
@@ -16,7 +17,7 @@ import {
 } from "lucide-react";
 import HoverPreview from "@/components/HoverPreview";
 
-export default function Ver() {
+function VerContent() {
     const searchParams = useSearchParams();
     const contenido = searchParams.get("contenido");
 
@@ -155,7 +156,6 @@ export default function Ver() {
                                     )}
                                 </div>
                                 <p className="text-gray-400 text-sm mt-2 w-full md:w-[300px]">
-                                    {/* recortamos en las primeras 220 caracteres y si hay más agregamos ... */}
                                     {movieData.overview.slice(0, 220) +
                                         (movieData.overview.length > 220
                                             ? "..."
@@ -212,8 +212,7 @@ export default function Ver() {
                                                 )}
                                             </div>
                                         </div>
-                                    ) : /* si existe la variable de servers y está vacia o si simplemente no existe */
-                                    movieData.servers.length === 0 ||
+                                    ) : movieData.servers.length === 0 ||
                                       movieData.servers === undefined ? (
                                         <div className="aspect-video flex items-center justify-center p-6 relative">
                                             <img
@@ -411,7 +410,6 @@ export default function Ver() {
                                             })}
                                         </div>
                                     ) : (
-                                        // Panel lateral cuando no hay servidores
                                         <div className="text-center py-8">
                                             <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                                                 <Clock className="w-8 h-8 text-white" />
@@ -434,8 +432,6 @@ export default function Ver() {
                                 </div>
                             </div>
                         </div>
-                        {/* Sección de similares */}
-                        {/* si similar movies tiene movies mostramos si no null */}
                         {similarMovies && similarMovies.length > 0 && (
                             <div className="mt-10">
                                 <section>
@@ -444,27 +440,6 @@ export default function Ver() {
                                             Similares
                                         </h2>
                                     </div>
-
-                                    {/* <div className="overflow-x-auto no-scrollbar py-4 pb-10">
-                                    <div className="flex gap-4 w-max">
-                                        {similarMovies.map((movie, index) => (
-                                            <HoverPreview
-                                                key={movie.id}
-                                                movie={{
-                                                    ...movie,
-                                                    poster: movie.poster_url,
-                                                    year: movie.year,
-                                                    rating: movie.rating,
-                                                    trailerUrl:
-                                                        movie.trailer_url,
-                                                    genres: movie.genres,
-                                                    description: movie.overview,
-                                                }}
-                                                index={index}
-                                            />
-                                        ))}
-                                    </div>
-                                </div> */}
                                     <div className="overflow-x-auto pb-4 no-scrollbar">
                                         <div className="flex gap-4 px-2">
                                             {similarMovies.map((movie) => (
@@ -488,7 +463,6 @@ export default function Ver() {
                                                         />
                                                     </div>
 
-                                                    {/* gradiente */}
                                                     <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-b from-transparent to-black"></div>
 
                                                     <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent">
@@ -511,5 +485,19 @@ export default function Ver() {
                 </div>
             </div>
         </>
+    );
+}
+
+export default function Ver() {
+    return (
+        <Suspense
+            fallback={
+                <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 pt-24 flex items-center justify-center">
+                    <Loader2 className="w-12 h-12 text-white animate-spin" />
+                </div>
+            }
+        >
+            <VerContent />
+        </Suspense>
     );
 }

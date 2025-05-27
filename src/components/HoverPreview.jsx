@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function HoverPreview({ movie, index, allMovies = [] }) {
+function HoverPreviewContent({ movie, index, allMovies = [] }) {
     const [isHovered, setIsHovered] = useState(false);
     const [modalWasClosed, setModalWasClosed] = useState(false);
     const containerRef = useRef(null);
@@ -573,5 +573,15 @@ export default function HoverPreview({ movie, index, allMovies = [] }) {
                 </div>
             )}
         </>
+    );
+}
+
+export default function HoverPreview({ movie, index, allMovies = [] }) {
+    return (
+        <Suspense fallback={
+            <div className="relative flex-shrink-0 w-[200px] h-[300px] bg-gray-800 rounded-lg animate-pulse" />
+        }>
+            <HoverPreviewContent movie={movie} index={index} allMovies={allMovies} />
+        </Suspense>
     );
 }
