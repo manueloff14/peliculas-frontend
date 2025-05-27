@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Header from "@/components/Header";
 import HoverPreview from "@/components/HoverPreview";
 
-export default function Peliculas() {
+function PeliculasContent() {
     const [pageData, setPageData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -263,5 +263,16 @@ export default function Peliculas() {
                 </span>
             </footer>
         </main>
+    );
+}
+
+
+export default function Peliculas() {
+    return (
+        <Suspense fallback={
+            <div className="relative flex-shrink-0 w-[200px] h-[300px] bg-gray-800 rounded-lg animate-pulse" />
+        }>
+            <PeliculasContent />
+        </Suspense>
     );
 }
